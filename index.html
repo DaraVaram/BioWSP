@@ -10,7 +10,7 @@
 <style>
 /* Layout: a long-form lab report in the EPFL/ESL pre-print style (epflpreprint.cls): a tinted title box with the
    EPFL logo, sans-serif headings in EPFL groseille, serif body text, links in EPFL canard.
-   One 68ch reading column, figures up to 960px, a sticky contents rail on wide screens.
+   One 780px column shared by text, title box, cards, figures and tables, with a sticky contents rail on wide screens.
    Subject detail: ECG traces are drawn on real ECG paper scale (25 mm/s, 10 mm/mV, 1 mm and 5 mm grid).
    EPFL brand colors: rouge #FF0000, groseille #B51F1F, taupe #413D3A, canard #007480, leman #00A79F, perle #CAC7C7. */
 :root {
@@ -26,7 +26,7 @@
   --f-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --f-text: "IBM Plex Serif", Georgia, "Times New Roman", serif;
   --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --col: 68ch; --wide: 960px;
+  --col: 780px; --wide: 780px; /* one column: text, title box, cards, figures and tables share the same width */
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -53,10 +53,10 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 16px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { background: var(--bg); color: var(--ink); font: 400 16.5px/1.65 var(--f-text); margin: 0;
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.65 var(--f-text); margin: 0;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-.shell { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; padding-block: 28px 80px; }
-@media (min-width: 1180px) { .shell { grid-template-columns: 220px minmax(0, 1fr); } }
+.shell { max-width: var(--wide); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; padding-block: 28px 80px; }
+@media (min-width: 1180px) { .shell { max-width: calc(220px + 40px + var(--wide)); grid-template-columns: 220px minmax(0, 1fr); } }
 nav.toc { display: none; }
 @media (min-width: 1180px) {
   nav.toc { display: block; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; max-height: calc(100vh - 48px); overflow: auto; font-size: 13.5px; }
@@ -89,7 +89,7 @@ nav.toc, .method, .harness, .flow, .verdict, .tag, table, figcaption, .fig-title
 .titlebox .tb-authors { font-size: 17px; font-weight: 700; color: var(--ink); margin: 0 0 4px; }
 .titlebox .tb-authors sup, .titlebox .tb-aff sup { font-weight: 400; font-size: .7em; }
 .titlebox .tb-aff { font-size: 15px; color: var(--ink-2); margin: 0 0 20px; line-height: 1.45; }
-.titlebox .tb-abstract { color: var(--ink-2); font-size: 17px; line-height: 1.6; margin: 0 0 22px; max-width: 76ch; }
+.titlebox .tb-abstract { color: var(--ink-2); font-size: 17px; line-height: 1.6; margin: 0 0 22px; }
 .titlebox .tb-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 18px 28px; }
 .titlebox .tb-meta { margin: 0; font-size: 14px; color: var(--ink-2); display: grid; gap: 3px; }
 .titlebox .tb-meta div { display: flex; gap: 6px; flex-wrap: wrap; }
