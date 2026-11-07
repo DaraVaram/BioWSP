@@ -6,4 +6,4 @@ Companion page to the pre-print. Can a language model train a biosignal network 
 
 Dara Varam, Taraneh Aminosharieh Najafi and David Atienza, Embedded Systems Laboratory (ESL), EPFL.
 
-`index.html` is built from the project's write-up sources. `figures/` holds the paper's figures as animated SVGs. ECG traces come from PTB-XL (Wagner et al., *Scientific Data* 2020, PhysioNet, CC BY 4.0). The head model in Figure 1 is the Lee Perry-Smith scan (Infinite-Realities), CC BY 3.0.
+`index.html` is built from the project's write-up sources. `figures/` holds the paper's figures as animated SVGs. `media/` holds the narrated overview video, its poster and its captions. ECG traces come from PTB-XL (Wagner et al., *Scientific Data* 2020, PhysioNet, CC BY 4.0). The head model in Figure 1 is the Lee Perry-Smith scan (Infinite-Realities), CC BY 3.0.

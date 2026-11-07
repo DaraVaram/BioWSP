@@ -121,6 +121,15 @@ figure { margin: 22px 0 26px; max-width: var(--wide); }
 figure .fig-box { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 16px 16px 12px; }
 figcaption { font-size: 13.5px; color: var(--muted); margin-top: 8px; max-width: var(--col); line-height: 1.5; }
 figcaption b { color: var(--ink-2); font-weight: 600; }
+/* the overview video under the title box, with its chapter links */
+figure.video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #fbf9f7; border: 1px solid var(--rule); border-radius: 8px; }
+ol.chapters { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; row-gap: 2px; }
+ol.chapters li:not(.ch-lab):not(:last-child)::after { content: "·"; margin: 0 7px; color: var(--rule-2); }
+ol.chapters .ch-lab { margin-right: 7px; }
+ol.chapters button { font: inherit; color: var(--accent-ink); background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+ol.chapters button:hover { text-decoration: underline; text-underline-offset: 2px; }
+ol.chapters .ch-t { color: var(--muted); font-variant-numeric: tabular-nums; }
+html:not(.js) ol.chapters { display: none; }
 .fig-title { font: 600 14.5px/1.3 var(--f-body); color: var(--ink); margin: 0 0 2px; }
 .fig-sub { font-size: 13px; color: var(--muted); margin: 0 0 10px; }
 .chart { width: 100%; min-height: 40px; }
@@ -324,6 +333,7 @@ ol.refs { font-size: 14px; line-height: 1.5; padding-left: 24px; color: var(--in
   <div class="toc-title">Contents</div>
   <ol>
     <li><a href="#top">Title and summary</a></li>
+    <li><a href="#video">Video</a></li>
     <li><a href="#intro">The open question</a></li>
     <li><a href="#method">Setup</a></li>
     <li class="sub"><a href="#data">Data and networks</a></li>
@@ -359,6 +369,17 @@ ol.refs { font-size: 14px; line-height: 1.5; padding-left: 24px; color: var(--in
     </div>
   </div>
 </header>
+
+<figure class="video" id="video">
+  <video id="overview" controls preload="none" playsinline poster="media/mixed-signals-video-poster.jpg" width="1920" height="1080">
+    <source src="media/mixed-signals-video.mp4" type="video/mp4">
+    <track kind="captions" src="media/mixed-signals-video.vtt" srclang="en" label="English">
+    <a href="media/mixed-signals-video.mp4">Download the video (MP4)</a>
+  </video>
+  <figcaption><b>Video.</b> The paper in under six minutes, narrated. Captions can be turned on in the player. <a href="media/mixed-signals-video.mp4" download>Download the video</a> (MP4, 35 MB).
+    <ol class="chapters" aria-label="Video chapters"><li class="ch-lab" aria-hidden="true">Jump to:</li><li><button type="button" data-t="0"><span class="ch-t">0:00</span> The question</button></li><li><button type="button" data-t="10"><span class="ch-t">0:10</span> Weights written by reasoning</button></li><li><button type="button" data-t="35"><span class="ch-t">0:35</span> Why biosignals</button></li><li><button type="button" data-t="62"><span class="ch-t">1:02</span> The test</button></li><li><button type="button" data-t="93"><span class="ch-t">1:33</span> Where it fails</button></li><li><button type="button" data-t="117"><span class="ch-t">1:57</span> Repairing a planted fault</button></li><li><button type="button" data-t="156"><span class="ch-t">2:36</span> Finding a hidden cause</button></li><li><button type="button" data-t="204"><span class="ch-t">3:24</span> Switching the shortcut off</button></li><li><button type="button" data-t="236"><span class="ch-t">3:56</span> A network from zero</button></li><li><button type="button" data-t="272"><span class="ch-t">4:32</span> Five samples against thirty</button></li><li><button type="button" data-t="311"><span class="ch-t">5:11</span> Mixed signals</button></li></ol>
+  </figcaption>
+</figure>
 
 <figure class="paper" id="fig1">
   <div class="fig-box"><div class="fig-scroll" style="--minw:760px"><img class="fig" src="figures/wsp_system.svg" width="1504" height="552" alt="System diagram: EEG recordings and the location of the electrodes on a 3-D head, a language model writing every weight of an empty TinyEEGNet by reasoning, and a chart where the written network, built from 5 training samples, scores 0.834 on 65 new samples, level with gradient descent on 30 training samples." loading="eager"></div></div>
@@ -1388,5 +1409,17 @@ if ("IntersectionObserver" in window) {
   }, { rootMargin: "-20% 0px -70% 0px" });
   Object.keys(map).forEach(function (id) { var t = document.getElementById(id); if (t) io.observe(t); });
 }
+
+// the overview video: a chapter link seeks to its time and plays
+var vid = document.getElementById("overview");
+if (vid) [].forEach.call(document.querySelectorAll("ol.chapters button"), function (b) {
+  b.addEventListener("click", function () {
+    var t = +b.getAttribute("data-t");
+    if (vid.readyState >= 1) vid.currentTime = t;
+    else vid.addEventListener("loadedmetadata", function () { vid.currentTime = t; }, { once: true });
+    var p = vid.play();
+    if (p && p.catch) p.catch(function () { /* the player shows its own controls */ });
+  });
+});
 })();
 </script>

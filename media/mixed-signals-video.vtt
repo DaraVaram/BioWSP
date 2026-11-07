@@ -1,0 +1,205 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.286
+A trained network is a long list of numbers that nobody chose.
+
+00:00:04.400 --> 00:00:09.474
+Can a language model write them instead, for networks that read the brain and the heart?
+
+00:00:10.617 --> 00:00:15.283
+Normally, gradient descent sets those numbers, one small step at a time.
+
+00:00:15.283 --> 00:00:18.441
+Weight-space programming hands the job to a language model.
+
+00:00:18.882 --> 00:00:24.617
+It reads the weights as text, reasons about what they compute, and writes new values.
+
+00:00:25.067 --> 00:00:30.709
+So far, it works for failures with a nameable cause, and for writing short, exact programs.
+
+00:00:31.406 --> 00:00:35.562
+Polishing a network that already works has not been shown yet.
+
+00:00:35.700 --> 00:00:38.289
+Biosignals are a natural next test:
+
+00:00:38.614 --> 00:00:43.167
+EEG, from the brain, and ECG, from the heart.
+
+00:00:43.167 --> 00:00:47.892
+Much of their physiology is textbook knowledge that a language model has likely read.
+
+00:00:48.705 --> 00:00:53.720
+Labels are scarce, and some networks learn quirks of the recording instead of the physiology.
+
+00:00:53.720 --> 00:00:55.345
+And the networks are small.
+
+00:00:55.787 --> 00:01:02.358
+TinyEEGNet has two thousand seven hundred thirty weights, few enough to read every one.
+
+00:01:02.593 --> 00:01:05.066
+Three models get the same prompts and tools:
+
+00:01:05.879 --> 00:01:13.273
+Claude Opus 5.5, GLM-5.3 and DeepSeek-V4.1-Flash.
+
+00:01:13.273 --> 00:01:15.897
+They face five jobs of rising difficulty:
+
+00:01:16.280 --> 00:01:22.823
+read a network, improve it, repair a known fault, debug an unknown one, and write one from nothing.
+
+00:01:22.823 --> 00:01:26.817
+Gradient descent, optimizers and iterative fitting are forbidden.
+
+00:01:27.513 --> 00:01:33.458
+Every result is scored on recordings the model never saw, against standard training-based fixes.
+
+00:01:33.703 --> 00:01:35.119
+The first two jobs fail.
+
+00:01:35.816 --> 00:01:40.790
+Shown a trained EEG network, no model could tell what task it was trained for.
+
+00:01:40.790 --> 00:01:46.282
+The best, GLM given the electrode names, was right in thirty-three percent of runs.
+
+00:01:46.978 --> 00:01:51.337
+On control networks never trained on any task, it scored twenty-nine.
+
+00:01:51.337 --> 00:01:53.438
+And no model improved a healthy network.
+
+00:01:54.135 --> 00:01:56.353
+The standard training fixes did no better.
+
+00:01:57.433 --> 00:01:58.896
+Repair goes much better.
+
+00:01:59.500 --> 00:02:06.240
+One fault is planted in a healthy EEG network, and the model is told that it is there, but not where.
+
+00:02:06.240 --> 00:02:10.582
+Two faults are visible in the weights, such as one filter multiplied by twenty.
+
+00:02:11.279 --> 00:02:16.513
+Two are invisible, and leave the weights looking normal, such as the two outputs swapped.
+
+00:02:16.513 --> 00:02:23.017
+Without any feedback, Opus and DeepSeek undo the visible faults almost entirely, from the weights alone.
+
+00:02:23.017 --> 00:02:25.037
+The invisible faults need feedback.
+
+00:02:25.850 --> 00:02:31.527
+With thirty accuracy checks, Opus repairs both completely, yet it rarely names the fault:
+
+00:02:32.038 --> 00:02:35.602
+it finds edits that the feedback rewards.
+
+00:02:36.683 --> 00:02:39.191
+Debugging is harder, because the cause is hidden.
+
+00:02:39.794 --> 00:02:50.517
+An ECG network is trained on recordings where an artifact, a signal that does not come from the heart, marks ninety-eight percent of heart attacks and two percent of the rest.
+
+00:02:50.517 --> 00:02:53.350
+So the network learns that the artifact means heart attack.
+
+00:02:54.046 --> 00:02:58.677
+At a second hospital, the artifact appears at random, and the shortcut fails.
+
+00:02:58.677 --> 00:03:06.560
+The artifact is mains hum from the power line, a calibration pulse at the start, or a muscle filter that strips out fine detail.
+
+00:03:07.257 --> 00:03:12.607
+The models hear only that the network works worse there, above all for heart attacks.
+
+00:03:12.607 --> 00:03:18.261
+Opus and GLM named all three artifacts, and where the shortcut lives in the network.
+
+00:03:18.958 --> 00:03:23.288
+DeepSeek named two, and no model invented a cause.
+
+00:03:24.367 --> 00:03:27.002
+Then they switched the shortcut off inside the network.
+
+00:03:27.606 --> 00:03:32.600
+Before, the artifact flipped seventy-five to ninety-one percent of heart-attack calls.
+
+00:03:32.600 --> 00:03:37.997
+After Opus's edits it flipped at most two percent, and after GLM's at most three.
+
+00:03:37.997 --> 00:03:47.749
+Heart-attack detection rose from an AUC below zero point seven to between zero point eight three and zero point eight six, in all but one case.
+
+00:03:48.183 --> 00:03:50.168
+No edit beat the best standard fix.
+
+00:03:50.772 --> 00:03:56.347
+But those fixes need the cause known in advance, and the models found it on their own.
+
+00:03:56.347 --> 00:03:58.297
+The last job is arguably the hardest.
+
+00:03:58.994 --> 00:04:06.073
+TinyEEGNet starts with every weight at zero, and the model must make it tell eyes open from eyes closed.
+
+00:04:06.073 --> 00:04:13.852
+It gets the layer formulas, the electrode positions, five people's recordings to practice on, and one hundred passes through the network.
+
+00:04:14.548 --> 00:04:18.113
+It may design filters, but never fit the network to the data.
+
+00:04:18.113 --> 00:04:20.307
+Opus's network is easy to read.
+
+00:04:20.818 --> 00:04:24.011
+It splits each electrode's signal into the brain's rhythm bands:
+
+00:04:24.452 --> 00:04:26.483
+alpha, theta and beta.
+
+00:04:26.483 --> 00:04:31.824
+Then it looks for strong alpha over the back of the head, which means the eyes are closed.
+
+00:04:32.213 --> 00:04:39.040
+On sixty-five people it never saw, Opus's network reaches a balanced accuracy of zero point eight three four.
+
+00:04:39.040 --> 00:04:44.206
+Gradient descent needs thirty people to match that, at zero point eight zero six.
+
+00:04:44.903 --> 00:04:49.080
+With five people, it reaches only zero point seven zero four.
+
+00:04:49.080 --> 00:04:52.981
+On this task, reasoning matched training with six times less data.
+
+00:04:53.678 --> 00:04:55.547
+Opus did overrate its network, though:
+
+00:04:56.058 --> 00:04:58.450
+it had expected zero point nine seven.
+
+00:04:58.450 --> 00:05:05.433
+On the second task, left versus right fist, Opus lands between training on ten people and on thirty.
+
+00:05:05.433 --> 00:05:11.284
+GLM and DeepSeek wrote working networks too, at the level of two to ten people.
+
+00:05:11.617 --> 00:05:12.952
+So the signals are mixed.
+
+00:05:13.335 --> 00:05:19.057
+A language model cannot yet tell what a trained network is for, or polish one that already works.
+
+00:05:19.057 --> 00:05:24.688
+But it can repair a planted fault, find a hidden shortcut, and write a working network from nothing.
+
+00:05:25.384 --> 00:05:29.673
+That network comes from knowing the physiology, not from fitting data.
+
+00:05:29.673 --> 00:05:35.617
+In principle, that could help the small networks inside wearable devices, though the idea needs much more study.
