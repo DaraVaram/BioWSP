@@ -1423,3 +1423,25 @@ if (vid) [].forEach.call(document.querySelectorAll("ol.chapters button"), functi
 });
 })();
 </script>
+<!-- Visitor count: one invisible request per page view, the same hit the visitor map's map.js sends (site key, page
+     path, referring page, ?v= link label, time). Nothing is drawn or added to the page. Live site only, so local
+     previews and copies opened from disk send nothing. -->
+<script>
+(function () {
+  if (location.hostname !== "daravaram.github.io") return;
+  try {
+    var tag = "";
+    try {
+      var m = /[?&]v=([^&#]*)/.exec(location.search);
+      tag = m ? decodeURIComponent(m[1]) : "";
+      if (tag) sessionStorage.setItem("vm_tag", tag);
+      else tag = sessionStorage.getItem("vm_tag") || "";
+    } catch (e) { /* storage blocked in some privacy modes: the label is optional */ }
+    new Image().src = "https://visitormap.visitormap.workers.dev/hit?d=pPXe_h3HoGbcBi8ut0BXtEw4"
+      + "&p=" + encodeURIComponent(location.pathname)
+      + "&r=" + encodeURIComponent(document.referrer || "")
+      + (tag ? "&v=" + encodeURIComponent(tag) : "")
+      + "&t=" + Date.now();
+  } catch (e) { /* counting must never break the page */ }
+})();
+</script>
