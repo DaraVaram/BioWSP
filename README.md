@@ -1,9 +1,9 @@
-# BioWSP: weight-space programming for biosignals
+# Mixed Signals: Weight-Space Programming for EEG and ECG
 
 Live page: https://daravaram.github.io/BioWSP/
 
-Can a language model read, improve, repair and debug EEG and ECG networks by editing their weights directly, with no gradient descent? This page describes eight experiments with Claude, the exact prompts, what Claude did, and what we propose next.
+Companion page to the pre-print. Can a language model train a biosignal network by reasoning about physiology, instead of by gradient descent? Five experiments on EEG and ECG networks (reading, improving, repairing, debugging, and writing a network from zero) with Claude Opus 5.5, GLM-5.3 and DeepSeek-V4.1-Flash, plus the exact prompts and Opus's reasoning, step by step.
 
-Dara Varam and Taraneh Aminosharieh Najafi, Embedded Systems Laboratory (ESL), EPFL.
+Dara Varam, Taraneh Aminosharieh Najafi and David Atienza, Embedded Systems Laboratory (ESL), EPFL.
 
-`index.html` is a single self-contained file built from the project's write-up sources. ECG traces come from PTB-XL (Wagner et al., *Scientific Data* 2020, PhysioNet, CC BY 4.0).
+`index.html` is built from the project's write-up sources. `figures/` holds the paper's figures as animated SVGs. ECG traces come from PTB-XL (Wagner et al., *Scientific Data* 2020, PhysioNet, CC BY 4.0). The head model in Figure 1 is the Lee Perry-Smith scan (Infinite-Realities), CC BY 3.0.
