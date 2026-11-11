@@ -173,6 +173,9 @@ details.prompt[open] > summary::before { transform: rotate(90deg); }
 details.prompt .p-body { border-top: 1px solid var(--rule); padding: 10px 14px 14px; display: grid; gap: 10px; }
 .p-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
 .p-head .mono { font-size: 12.5px; color: var(--muted); }
+.cite-text { overflow-wrap: anywhere; }
+.cite-bib { display: grid; gap: 8px; margin-top: 14px; }
+.cite-bib pre.ptext { white-space: pre; overflow-x: auto; word-break: normal; }
 pre.ptext { margin: 0; background: var(--code); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; font: 12.5px/1.55 var(--f-mono); white-space: pre-wrap; word-break: break-word; max-height: 440px; overflow: auto; color: var(--ink); }
 button.btn { font: 500 13px/1 var(--f-body); color: var(--ink); background: var(--chip); border: 1px solid var(--rule-2); border-radius: 6px; padding: 7px 11px; cursor: pointer; }
 button.btn:hover { border-color: var(--accent); }
@@ -347,6 +350,7 @@ ol.refs { font-size: 14px; line-height: 1.5; padding-left: 24px; color: var(--in
     <li class="sub"><a href="#exp4">4 · Debugging on unseen data</a></li>
     <li class="sub"><a href="#exp5">5 · Writing from zero</a></li>
     <li><a href="#learned">What we learned</a></li>
+    <li><a href="#cite">Citation</a></li>
     <li><a href="#appendix">Appendix</a></li>
   </ol>
 </nav>
@@ -356,11 +360,12 @@ ol.refs { font-size: 14px; line-height: 1.5; padding-left: 24px; color: var(--in
   <h1>Mixed Signals: Weight-Space Programming for EEG and ECG</h1>
   <p class="tb-authors">Dara Varam<sup>1</sup>, Taraneh Aminosharieh Najafi<sup>1</sup>, David Atienza<sup>1</sup></p>
   <p class="tb-aff"><sup>1</sup>Embedded Systems Laboratory (ESL), École Polytechnique Fédérale de Lausanne (EPFL), Switzerland</p>
-  <p class="tb-abstract">Can a language model train a neural network by reasoning, instead of by gradient descent? We gave Claude Opus 5.5, GLM-5.3 and DeepSeek-V4.1-Flash the weights of EEG and ECG networks and five jobs: read a network, improve it, repair a known fault, find out why it fails on unseen data, and write one from zero. They could not read or improve networks. They did repair planted faults, found hidden recording artifacts without being told, and wrote working EEG networks from nothing. From 5 training samples, Opus matched gradient descent on 30. This page is the companion to the pre-print: every setup in detail, the exact prompts, and Opus's reasoning in its own words.</p>
+  <p class="tb-abstract">Can a language model train a neural network by reasoning, instead of by gradient descent? We gave Claude Opus 5.5, GLM-5.3 and DeepSeek-V4.1-Flash the weights of EEG and ECG networks and five jobs: read a network, improve it, repair a known fault, find out why it fails on unseen data, and write one from zero. They could not read or improve networks. They did repair planted faults, found hidden recording artifacts without being told, and wrote working EEG networks from nothing. From 5 training samples, Opus matched gradient descent on 30. This page is the companion to the <a href="https://arxiv.org/abs/2611.13758">pre-print</a>: every setup in detail, the exact prompts, and Opus's reasoning in its own words.</p>
   <div class="tb-foot">
     <dl class="tb-meta">
       <div><dt>Date:</dt><dd>November 2026</dd></div>
-      <div><dt>Type:</dt><dd>Companion page to the pre-print</dd></div>
+      <div><dt>Paper:</dt><dd><a href="https://arxiv.org/abs/2611.13758">arXiv:2611.13758</a> · <a href="https://arxiv.org/pdf/2611.13758">PDF</a> · <a href="#cite">Cite</a></dd></div>
+      <div><dt>Type:</dt><dd>Companion page to the <a href="https://arxiv.org/abs/2611.13758">pre-print</a></dd></div>
       <div><dt>Correspondence:</dt><dd><a href="mailto:dara.varam@epfl.ch">dara.varam@epfl.ch</a></dd></div>
     </dl>
     <div class="tb-lockup">
@@ -790,6 +795,27 @@ ol.refs { font-size: 14px; line-height: 1.5; padding-left: 24px; color: var(--in
   </div>
 </section>
 
+<!-- ======================================================================= Citation -->
+<hr class="part">
+<section id="cite">
+  <div class="col"><div class="eyebrow">Citation</div><h2>How to cite</h2>
+    <p>If this work is useful to you, please cite the pre-print:</p>
+    <p class="cite-text">D. Varam, T. Aminosharieh Najafi and D. Atienza, “Mixed Signals: Weight-Space Programming for EEG and ECG,” arXiv:2611.13758, 2026. <a href="https://arxiv.org/abs/2611.13758">https://arxiv.org/abs/2611.13758</a></p>
+    <div class="cite-bib">
+      <div class="p-head"><span class="mono">BibTeX</span><button type="button" class="btn" id="cite-copy">Copy</button></div>
+      <pre class="ptext" id="cite-pre" tabindex="0">@misc{varam2026mixedsignals,
+  title         = {Mixed Signals: Weight-Space Programming for {EEG} and {ECG}},
+  author        = {Varam, Dara and Aminosharieh Najafi, Taraneh and Atienza, David},
+  year          = {2026},
+  eprint        = {2611.13758},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url           = {https://arxiv.org/abs/2611.13758}
+}</pre>
+    </div>
+  </div>
+</section>
+
 <!-- ======================================================================= Appendix -->
 <hr class="part">
 <section id="appendix">
@@ -1066,6 +1092,17 @@ function promptBlock(el, title, parts) {
     });
   });
 }
+// citation: copy the BibTeX entry
+(function () {
+  var btn = document.getElementById("cite-copy"), pre = document.getElementById("cite-pre");
+  if (!btn || !pre) return;
+  btn.addEventListener("click", function () {
+    var done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); };
+    try { navigator.clipboard.writeText(pre.textContent).then(done, function () { selectText(pre); btn.textContent = "Selected"; }); }
+    catch (e) { selectText(pre); btn.textContent = "Selected"; }
+  });
+})();
+
 function selectText(node) { var r = document.createRange(); r.selectNodeContents(node); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
 
 /* reasoning steps: each step is a collapsible row (phase, step number, title). Opening it shows our summary and
