@@ -70,6 +70,8 @@ nav.toc, .method, .harness, .verdict, .tag, table, figcaption, .fig-title, .fig-
 .titlebox { background: var(--box); border-radius: 13px; padding: clamp(20px, 3.4vw, 30px); max-width: var(--wide); margin: 0; }
 .titlebox h1 { margin-bottom: 12px; }
 .titlebox .tb-authors { font-size: 17px; font-weight: 700; color: var(--ink); margin: 0 0 4px; }
+.titlebox .tb-authors a { color: inherit; text-decoration: underline; text-decoration-color: var(--rule-2); text-decoration-thickness: 1px; }
+.titlebox .tb-authors a:hover { color: var(--accent); text-decoration-color: currentColor; }
 .titlebox .tb-authors sup, .titlebox .tb-aff sup { font-weight: 400; font-size: .7em; }
 .titlebox .tb-aff { font-size: 15px; color: var(--ink-2); margin: 0 0 20px; line-height: 1.45; }
 .titlebox .tb-abstract { color: var(--ink-2); font-size: 17px; line-height: 1.6; margin: 0 0 22px; }
@@ -358,7 +360,7 @@ ol.refs { font-size: 14px; line-height: 1.5; padding-left: 24px; color: var(--in
 <main>
 <header class="titlebox" id="top">
   <h1>Mixed Signals: Weight-Space Programming for EEG and ECG</h1>
-  <p class="tb-authors">Dara Varam<sup>1</sup>, Taraneh Aminosharieh Najafi<sup>1</sup>, David Atienza<sup>1</sup></p>
+  <p class="tb-authors"><a href="https://daravaram.github.io/">Dara Varam</a><sup>1</sup>, Taraneh Aminosharieh Najafi<sup>1</sup>, David Atienza<sup>1</sup></p>
   <p class="tb-aff"><sup>1</sup>Embedded Systems Laboratory (ESL), École Polytechnique Fédérale de Lausanne (EPFL), Switzerland</p>
   <p class="tb-abstract">Can a language model train a neural network by reasoning, instead of by gradient descent? We gave Claude Opus 5.5, GLM-5.3 and DeepSeek-V4.1-Flash the weights of EEG and ECG networks and five jobs: read a network, improve it, repair a known fault, find out why it fails on unseen data, and write one from zero. They could not read or improve networks. They did repair planted faults, found hidden recording artifacts without being told, and wrote working EEG networks from nothing. From 5 training samples, Opus matched gradient descent on 30. This page is the companion to the <a href="https://arxiv.org/abs/2611.13758">pre-print</a>: every setup in detail, the exact prompts, and Opus's reasoning in its own words.</p>
   <div class="tb-foot">
